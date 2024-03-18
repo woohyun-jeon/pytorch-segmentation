@@ -2,7 +2,7 @@ import torch.nn as nn
 
 class down_2_block(nn.Module):
     def __init__(self, in_channels, out_channels):
-        super(down_2_block).__init__()
+        super(down_2_block, self).__init__()
         self.in_channels = in_channels
         self.conv = nn.Sequential(
             nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, padding=1),
@@ -20,7 +20,7 @@ class down_2_block(nn.Module):
 
 class down_3_block(nn.Module):
     def __init__(self, in_channels, out_channels):
-        super(down_3_block).__init__()
+        super(down_3_block, self).__init__()
         self.in_channels = in_channels
         self.conv = nn.Sequential(
             nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, padding=1),
@@ -40,7 +40,7 @@ class down_3_block(nn.Module):
 
 class up_2_block(nn.Module):
     def __init__(self, in_channels, out_channels):
-        super(up_2_block).__init__()
+        super(up_2_block, self).__init__()
         self.in_channels = in_channels
         self.unpool = nn.MaxUnpool2d(2, 2)
         self.conv = nn.Sequential(
@@ -57,7 +57,7 @@ class up_2_block(nn.Module):
 
 class up_3_block(nn.Module):
     def __init__(self, in_channels, out_channels):
-        super(up_3_block).__init__()
+        super(up_3_block, self).__init__()
         self.in_channels = in_channels
         self.unpool = nn.MaxUnpool2d(2, 2)
         self.conv = nn.Sequential(
@@ -109,4 +109,8 @@ class SegNet(nn.Module):
 
         return up1
 
-
+# import torch
+# device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+# print(device)
+# model = SegNet(in_channels=3, num_classes=10).to(device)
+# print(model)
