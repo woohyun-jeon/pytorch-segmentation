@@ -92,7 +92,7 @@ class HRModule(nn.Module):
     def _make_branches(self):
         branches = []
         for i in range(self.num_branches):
-            branches.append(self._make_one_branch(i, self.blocks))
+            branches.append(self._make_one_branch(branch_index=i))
 
         return nn.ModuleList(branches)
 
@@ -119,7 +119,7 @@ class HRModule(nn.Module):
                         if k == i-j-1:
                             conv3x3s.append(nn.Sequential(
                                 nn.Conv2d(num_inchannels[j], num_inchannels[i], kernel_size=3, stride=2, padding=1, bias=False),
-                                nn.BatchNorm2d(num_inchannels[j], momentum=BN_MOMENTUM)
+                                nn.BatchNorm2d(num_inchannels[i], momentum=BN_MOMENTUM)
                             ))
                         else:
                             conv3x3s.append(nn.Sequential(
@@ -158,7 +158,7 @@ class HRModule(nn.Module):
                     )
                 else:
                     y = y + self.fuse_layers[i][j](x[j])
-            x_fuse.append(nn.ReLU(y, inplace=True))
+            x_fuse.append(self.relu(y))
 
         return x_fuse
 
@@ -358,10 +358,3 @@ def hrnet32(in_channels, num_classes, **kwargs):
 
 def hrnet48(in_channels, num_classes, **kwargs):
     return _hrnet(in_channels, num_classes, 'hrnet48', **kwargs)
-
-
-# import torch
-# device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-# print(device)
-# model = hrnet48(in_channels=3, num_classes=10).to(device)
-# print(model)
