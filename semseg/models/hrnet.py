@@ -3,6 +3,7 @@ import torch.nn.functional as F
 import numpy as np
 
 BN_MOMENTUM = 0.1
+ALIGN_CORNERS = None
 
 def conv3x3(in_channels, out_channels, stride=1, groups=1, dilation=1):
     return nn.Conv2d(in_channels, out_channels, kernel_size=3, stride=stride, padding=dilation,
@@ -108,8 +109,65 @@ class HRModule(nn.Module):
         num_inchannels = self.num_inchannels
 
         fuse_layers = []
+        for i in range(num_branches if self.multi_scale_output else 1): # i가 받는 쪽
+            fuse_layer = []
+            for j in range(num_branches):
+                if j > i: # 아래에서 위로 올라가는 거니까 upsampling
+                    # if x>r, f_xr(R) upsamples the input representation R through the bilinear upsampling followed by a 1x1 convolution for aligning the number of channels
+                    # upsampling 은 나중에 forward에서
+                    fuse_layer.append(nn.Sequential(
+                        nn.Conv2d(num_inchannels[j], num_inchannels[i], 1, 1, 0, bias=False),
+                        nn.BatchNorm2d(num_inchannels[i], MOMENTUM=BN_MOMENTUM),
+                    ))
+                elif j == i:
+                    # if x=r, f_xr(R) = R
+                    fuse_layer.append(None)
+                else:
+                    # if x<r, f_xr(R) downsamples the input representation R through (r-s) stride-2 3x3 convolutions
+                    conv3x3s = []
+                    for k in range(i-j):
+                        if k == i-j-1: # 마지막에 채널 맞춰줌
+                            conv3x3s.append(nn.Sequential(
+                                nn.Conv2d(num_inchannels[j], num_inchannels[i], kernel=3, stride=2, padding=1, bias=False),
+                                nn.BatchNorm2d(num_inchannels[j], MOMENTUM=BN_MOMENTUM)
+                            ))
+                        else:
+                            conv3x3s.append(nn.Sequential(
+                                nn.Conv2d(num_inchannels[j], num_inchannels[j], kernel=3, stride=2, padding=1, bias=False),
+                                nn.BatchNorm2d(num_inchannels[j], MOMENTUM=BN_MOMENTUM),
+                                nn.ReLU(inplace=True)
+                            ))
+                    fuse_layer.append(nn.Sequential(*conv3x3s))
+            fuse_layers.append(nn.ModuleList(fuse_layer))
 
+        return nn.ModuleList(fuse_layers)
 
+    def forward(self, x):
+        if self.num_branches == 1:
+            return [self.branches[0](x[0])]
+
+        for i in range(self.num_branches):
+            x[i] = self.branches[i](x[i])
+
+        x_fuse = []
+        for i in range(len(self.fuse_layers)):
+            y = x[0] if i == 0 else self.fuse_layers[i][0](x[0])
+            for j in range(1, self.num_branches):
+                if i == j:
+                    y = y + x[j]
+                elif j > i:
+                    width_output = x[i].shape[-1]
+                    height_output = x[i].shape[-2]
+                    y = y + F.interpolate(
+                        self.fuse_layers[i][j](x[j]),
+                        size=[height_output, width_output],
+                        mode='bilinear', align_corners=ALIGN_CORNERS
+                    )
+                else:
+                    y = y + self.fuse_layers[i][j](x[j])
+            x_fuse.append(nn.ReLU(y, inplace=True))
+
+        return x_fuse
 
 
 blocks_dict = {
@@ -247,9 +305,57 @@ class HRNet(nn.Module):
             num_inchannels = modules[-1].get_num_inchannels()
 
         return nn.Sequential(*modules), num_inchannels
+
     def forward(self, x):
         x = self.conv_stem(x)
         x = self.layer1(x)
+
+        x_list = []
+        for i in range(self.stage2_cfg['NUM_BRANCHES']):
+            if self.transition1[i] is not None:
+                x_list.append(self.transition1[i](x))
+            else:
+                x_list.append(x)
+        y_list = self.stage2(x_list)
+
+        x_list = []
+        for i in range(self.stage3_cfg['NUM_BRANCHES']):
+            if self.transition2[i] is not None:
+                if i < self.stage2_cfg['NUM_BRANCHES']:
+                    x_list.append(self.transition2[i](y_list[i]))
+                else:
+                    x_list.append(self.transition2[i](y_list[-1]))
+            else:
+                x_list.append(y_list[i])
+        y_list = self.stage3(x_list)
+
+        x_list = []
+        for i in range(self.stage4_cfg['NUM_BRANCHES']):
+            if self.transition3[i] is not None:
+                if i < self.stage3_cfg['NUM_BRANCHES']:
+                    x_list.append(self.transition3[i](y_list[i]))
+                else:
+                    x_list.append(self.transition3[i](y_list[-1]))
+            else:
+                x_list.append(y_list[i])
+        x = self.stage4(x_list)
+
+        # Upsampling
+        x0_h, x0_w = x[0].size(2), x[0].size(3)
+        x1 = F.interpolate(x[1], size=(x0_h, x0_w), mode='bilinear', align_corners=ALIGN_CORNERS)
+        x2 = F.interpolate(x[2], size=(x0_h, x0_w), mode='bilinear', align_corners=ALIGN_CORNERS)
+        x3 = F.interpolate(x[3], size=(x0_h, x0_w), mode='bilinear', align_corners=ALIGN_CORNERS)
+
+        x = torch.cat([x[0], x1, x2, x3], 1)
+
+        x = self.last_layer(x)
+
+        return x
+
+
+
+
+
 
 
 
