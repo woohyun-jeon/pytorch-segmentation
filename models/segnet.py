@@ -1,5 +1,7 @@
 import torch.nn as nn
 
+cfgs = [64, 128, 256, 512]
+
 class down_2_block(nn.Module):
     def __init__(self, in_channels, out_channels):
         super(down_2_block, self).__init__()
@@ -81,18 +83,18 @@ class SegNet(nn.Module):
         self.num_classes = num_classes
 
         # encoding layers
-        self.down1 = down_2_block(self.in_channels, 64)
-        self.down2 = down_2_block(64, 128)
-        self.down3 = down_3_block(128, 256)
-        self.down4 = down_3_block(256, 512)
-        self.down5 = down_3_block(512, 512)
+        self.down1 = down_2_block(self.in_channels, cfgs[0])
+        self.down2 = down_2_block(cfgs[0], cfgs[1])
+        self.down3 = down_3_block(cfgs[1], cfgs[2])
+        self.down4 = down_3_block(cfgs[2], cfgs[3])
+        self.down5 = down_3_block(cfgs[3], cfgs[3])
 
         # decoding layers
-        self.up5 = up_3_block(512, 512)
-        self.up4 = up_3_block(512, 256)
-        self.up3 = up_3_block(256, 128)
-        self.up2 = up_2_block(128, 64)
-        self.up1 = up_2_block(64, self.num_classes)
+        self.up5 = up_3_block(cfgs[3], cfgs[3])
+        self.up4 = up_3_block(cfgs[3], cfgs[2])
+        self.up3 = up_3_block(cfgs[2], cfgs[1])
+        self.up2 = up_2_block(cfgs[1], cfgs[0])
+        self.up1 = up_2_block(cfgs[0], self.num_classes)
 
     def forward(self, x):
         down1, unpool_indices1, unpool_shape1 = self.down1(x)
@@ -108,9 +110,3 @@ class SegNet(nn.Module):
         up1 = self.up1(up2, unpool_indices1, unpool_shape1)
 
         return up1
-
-# import torch
-# device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-# print(device)
-# model = SegNet(in_channels=3, num_classes=10).to(device)
-# print(model)
