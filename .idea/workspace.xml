@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c41e4c1f-c81d-4426-b3f6-9f131f66b81c" name="Changes" comment="fix : add from hrent import * in models/__init__.py" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+  }
+}</component>
+  <component name="GitRewordedCommitMessages">
+    <option name="commitMessagesMapping">
+      <RewordedCommitMessageMapping>
+        <option name="originalMessage" value="fix : minor" />
+        <option name="rewordedMessage" value="fix : minor" />
+      </RewordedCommitMessageMapping>
+    </option>
+    <option name="currentCommit" value="1" />
+    <option name="onto" value="42f8778004deb8f6fcaacb4acf47bebb6a2a82b1" />
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="recentNewPullRequestHead">
+      <RepoCoordinatesHolder>
+        <option name="owner" value="woohyuun" />
+        <option name="repository" value="semantic-segmentation" />
+      </RepoCoordinatesHolder>
+    </option>
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="c061c68b-7656-4629-a8d3-866bd8931c50" />
+        <option name="url" value="https://github.com/woohyuun/semantic-segmentation.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2dnZZJPGOuxzDiyTDTsWXNmvgOA" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "true",
+    "last_opened_file_path": "C:/Users/USER/iCloudDrive/DL/SEstudy",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\USER\iCloudDrive\DL\SEstudy\semseg\config" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\USER\iCloudDrive\DL\SEstudy\semseg\config" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-50da183f06c8-2887949eec09-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.13135.95" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c41e4c1f-c81d-4426-b3f6-9f131f66b81c" name="Changes" comment="" />
+      <created>1710645857146</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1710645857146</updated>
+      <workItem from="1710645858930" duration="280000" />
+      <workItem from="1710646432450" duration="69000" />
+      <workItem from="1710646517690" duration="8086000" />
+      <workItem from="1710729928340" duration="2181000" />
+      <workItem from="1710810120456" duration="43052000" />
+      <workItem from="1711092616058" duration="3352000" />
+      <workItem from="1711328506455" duration="1119000" />
+      <workItem from="1711350249877" duration="4110000" />
+      <workItem from="1714022177416" duration="454000" />
+    </task>
+    <task id="LOCAL-00001" summary="feat: SegNet model code">
+      <option name="closed" value="true" />
+      <created>1710654942830</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1710654942830</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fix: omitted super().__init__()">
+      <option name="closed" value="true" />
+      <created>1710730816485</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1710730816485</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat: HRNet model code (working)">
+      <option name="closed" value="true" />
+      <created>1710841002792</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1710841002792</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat: HRNet model code (working)">
+      <option name="closed" value="true" />
+      <created>1710903219906</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1710903219906</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat: HRNet model code, added config directory">
+      <option name="closed" value="true" />
+      <created>1710909433428</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1710909433428</updated>
+    </task>
+    <task id="LOCAL-00006" summary="fix : minor">
+      <option name="closed" value="true" />
+      <created>1710911162568</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1710911162568</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fix : minor">
+      <option name="closed" value="true" />
+      <created>1710911909416</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1710911909416</updated>
+    </task>
+    <task id="LOCAL-00008" summary="fix : add from hrent import * in models/__init__.py">
+      <option name="closed" value="true" />
+      <created>1714022454747</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1714022454747</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: SegNet model code" />
+    <MESSAGE value="fix: omitted super().__init__()" />
+    <MESSAGE value="feat: HRNet model code (working)" />
+    <MESSAGE value="feat: HRNet model code, added config directory" />
+    <MESSAGE value="fix : minor" />
+    <MESSAGE value="fix : add from hrent import * in models/__init__.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix : add from hrent import * in models/__init__.py" />
+  </component>
+</project>
