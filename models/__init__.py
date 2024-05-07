@@ -6,3 +6,4 @@ from .hrnet import *
 from .attention_unet import *
 from .deeplabv3 import *
 from .deeplabv3plus import *
+from .pspnet import *
