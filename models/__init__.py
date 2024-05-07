@@ -7,3 +7,4 @@ from .attention_unet import *
 from .deeplabv3 import *
 from .deeplabv3plus import *
 from .pspnet import *
+from .pyramid_attention_network import *

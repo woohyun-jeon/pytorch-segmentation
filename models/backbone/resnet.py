@@ -98,7 +98,7 @@ def resnet152(**kwargs):
 
 
 if __name__ == '__main__':
-    img_size = 224
+    img_size = 512
 
     model = resnet101(in_channels=3)
 
