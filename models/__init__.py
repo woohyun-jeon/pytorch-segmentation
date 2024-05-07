@@ -4,3 +4,5 @@ from .unet3plus import *
 from .segnet import *
 from .hrnet import *
 from .attention_unet import *
+from .deeplabv3 import *
+from .deeplabv3plus import *
