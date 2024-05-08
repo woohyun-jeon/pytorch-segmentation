@@ -2,11 +2,38 @@ import torch
 import torch.nn as nn
 
 
-__all__ = ['ResNet', 'resnet50', 'resnet101', 'resnet152']
+__all__ = ['BasicBlock', 'Bottleneck', 'ResNet', 'resnet50', 'resnet101', 'resnet152']
 
 
 # set ResNet configuration
 cfgs = [64, 128, 256, 512]
+
+
+class BasicBlock(nn.Module):
+    expansion = 1
+    def __init__(self, in_dims, out_dims, stride=1):
+        super(BasicBlock, self).__init__()
+        self.residual = nn.Sequential(
+            nn.Conv2d(in_dims, out_dims, kernel_size=3, stride=stride, padding=1, bias=False),
+            nn.BatchNorm2d(num_features=out_dims),
+            nn.ReLU(inplace=True),
+
+            nn.Conv2d(out_dims, out_dims*BasicBlock.expansion, kernel_size=3, stride=1, padding=1, bias=False),
+            nn.BatchNorm2d(num_features=out_dims*BasicBlock.expansion)
+        )
+
+        if stride != 1 or in_dims != out_dims*BasicBlock.expansion:
+            self.shortcut = nn.Conv2d(in_dims, out_dims*BasicBlock.expansion, kernel_size=1, stride=stride, bias=False)
+        else:
+            self.shortcut = nn.Sequential()
+
+        self.relu = nn.ReLU(inplace=True)
+
+    def forward(self, x):
+        out = self.residual(x) + self.shortcut(x)
+        out = self.relu(out)
+
+        return out
 
 
 class Bottleneck(nn.Module):
