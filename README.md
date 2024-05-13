@@ -53,6 +53,7 @@ The directory structure should be as follows:
 - [x] UNet++
 - [x] UNet3+
 - [x] AttentionUNet
+- [x] Swin-UNet
 - [x] SegNet
 - [x] HRNet
 - [x] DeepLabv3
