@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from backbone.resnet import resnet50, resnet101, resnet152
+from .backbone.resnet import resnet50, resnet101, resnet152
 
 
 __all__ = ['pan_resnet50', 'pan_resnet101', 'pan_resnet152']

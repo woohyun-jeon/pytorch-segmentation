@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from backbone.swin_transformer import SwinEncoderBlock
+from .backbone.swin_transformer import SwinEncoderBlock
 
 
 __all__ = ['SwinUnet', 'swin_unet']

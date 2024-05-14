@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 from config.hrnet_config import MODEL_CONFIGS
-from backbone.resnet import BasicBlock, Bottleneck
+from .backbone.resnet import BasicBlock, Bottleneck
 
 
 __all__ = ['HRNet', 'hrnet18', 'hrnet32', 'hrnet48']

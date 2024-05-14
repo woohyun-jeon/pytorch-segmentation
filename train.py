@@ -6,7 +6,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 import argparse
 import random
 import numpy as np
-from tqdm import tqdm
+from tqdm.auto import tqdm
 import matplotlib.pyplot as plt
 
 from datasets import *
@@ -20,13 +20,13 @@ import albumentations as A
 
 def get_arguments():
     parser = argparse.ArgumentParser(description='Parameter setting for training segmentation model')
-    parser.add_argument('--model_name', type=str, default='UNet', help='model name')
-    parser.add_argument('--root_dir', type=str, default='D:/study/segmentation/datasets/data', help='root directory')
-    parser.add_argument('--out_dir', type=str, default='D:/study/segmentation/outputs', help='output directory')
+    parser.add_argument('--model_name', type=str, default='unet', help='model name')
+    parser.add_argument('--root_dir', type=str, default='E:/study/segmentation/data', help='root directory')
+    parser.add_argument('--out_dir', type=str, default='E:/study/segmentation/outputs', help='output directory')
     parser.add_argument('--num_classes', type=int, default=19, help='number of classes')
     parser.add_argument('--epochs', type=int, default=500, help='number of epochs')
     parser.add_argument('--batch_size', type=int, default=8, help='batch size')
-    parser.add_argument('--img_size', type=int, default=1024, help='image size')
+    parser.add_argument('--img_size', type=int, default=512, help='image size')
     parser.add_argument('--num_workers', type=int, default=1, help='number of workers')
     parser.add_argument('--seed', type=int, default=123, help='random seed')
     parser.add_argument('--learning_rate', type=float, default=0.001, help='learning rate')
@@ -41,7 +41,7 @@ def train(model, epoch, device, train_dataloader, optimizer, criterion):
     model.train()
 
     train_loss = 0.
-    for data, target in tqdm(train_dataloader, desc='Epoch {} Train'.format(epoch)):
+    for data, target in tqdm(train_dataloader, desc='Epoch {} Train'.format(epoch), total=len(train_dataloader)):
         data, target = data.to(device), target.to(device)
 
         # feed forward
@@ -66,7 +66,7 @@ def valid(model, epoch, device, valid_dataloader, criterion):
 
     valid_loss = 0.
     with torch.no_grad():
-        for data, target in tqdm(valid_dataloader, desc='Epoch {} Validation'.format(epoch)):
+        for data, target in tqdm(valid_dataloader, desc='Epoch {} Validation'.format(epoch), total=len(valid_dataloader)):
             data, target = data.to(device), target.to(device)
 
             # get predicted
@@ -143,7 +143,7 @@ def main():
 
         if valid_loss < min_loss:
             min_loss = valid_loss
-            torch.save(model.state_dict(), os.path.join(args.out_dir, args.model_name.lower() + '_best.pth'))
+            torch.save(model.state_dict(), os.path.join(args.out_dir, args.model_name.lower() + '_cityscape_512.pth'))
 
     # save loss changes to image file
     plt.figure(figsize=(7.5, 5))
@@ -152,9 +152,9 @@ def main():
     plt.title('Train-Valid Loss', fontsize=20)
     plt.xlabel('Epochs', fontsize=15)
     plt.ylabel('Loss', fontsize=15)
-    plt.xticks(range(1, len(train_losses) + 1), fontsize=12.5)
-    plt.yticks(fontsize=12.5)
-    plt.legend(fontsize=17.5)
+    plt.xticks(range(1, len(train_losses) + 1), fontsize=10)
+    plt.yticks(fontsize=10)
+    plt.legend(fontsize=10)
     plt.savefig(os.path.join(args.out_dir, args.model_name.lower() + '_loss.png'))
 
 
